@@ -4,7 +4,7 @@ import pyautogui
 while True:
     try:
         # 画面上から画像を探す
-        location = pyautogui.locateCenterOnScreen("./assets/ss.jpg")
+        location = pyautogui.locateCenterOnScreen("./assets/target.jpg")
         if location:
             pyautogui.click(location)  # 見つかったらそこをクリック
         else:
@@ -12,7 +12,7 @@ while True:
     except Exception as e:
         print(f"エラーが発生しました: {e}")
 
-    time.sleep(8)  # 8秒待つ
+    time.sleep(4)  # 4秒待つ
 
     try:
         pyautogui.moveTo(
