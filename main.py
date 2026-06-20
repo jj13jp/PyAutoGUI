@@ -1,10 +1,16 @@
 import time
 import pyautogui
 
+CONFIDENCE = 0.8  # 1.0=完全一致、下げるほど緩く検出（検出漏れ時は下げる）
+
 while True:
     try:
         # 画面上から画像を探す
-        location = pyautogui.locateCenterOnScreen("./assets/target.jpg")
+        location = pyautogui.locateCenterOnScreen(
+            "./assets/target.jpg",
+            confidence=CONFIDENCE,
+            grayscale=True,
+        )
         if location:
             pyautogui.click(location)  # 見つかったらそこをクリック
         else:
