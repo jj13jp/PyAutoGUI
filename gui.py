@@ -147,7 +147,7 @@ class MainWindow(QWidget):
         self._append_log(f"検出してクリック: ({x}, {y})")
 
     def _on_not_found(self) -> None:
-        self._status_label.setText("実行中（最後の検出: 見つかりず）")
+        self._status_label.setText("実行中（最後の検出: 見つからず）")
         self._append_log("画像が見つかりませんでした")
 
     def _on_error(self, message: str) -> None:
