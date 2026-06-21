@@ -11,3 +11,6 @@ wheels/
 
 # 固有
 assets/
+
+#codegraph
+.codegraph/
