@@ -1,28 +1,23 @@
-import time
-import pyautogui
+import os
+import sys
 
-CONFIDENCE = 0.8  # 1.0=完全一致、下げるほど緩く検出（検出漏れ時は下げる）
+from PySide6.QtWidgets import QApplication
 
-while True:
-    try:
-        # 画面上から画像を探す
-        location = pyautogui.locateCenterOnScreen(
-            "./assets/target.jpg",
-            confidence=CONFIDENCE,
-            grayscale=True,
-        )
-        if location:
-            pyautogui.click(location)  # 見つかったらそこをクリック
-        else:
-            print("画像が見つかりませんでした")
-    except Exception as e:
-        print(f"エラーが発生しました: {e}")
+from gui import MainWindow
 
-    time.sleep(4)  # 4秒待つ
 
-    try:
-        pyautogui.moveTo(
-            pyautogui.size()[0] - 100, pyautogui.size()[1] - 100, duration=0.5
-        )
-    except pyautogui.FailSafeException:
-        print("FailSafeExceptionをキャッチしました")
+def main() -> None:
+    # pyautogui/pyscreeze が import 時に SetProcessDPIAware()（システムDPI aware）を
+    # 呼ぶため、Qt 既定の per-monitor aware v2 設定が後から失敗し警告が出る。
+    # 座標の一貫性のため pyautogui 側の設定を活かし、Qt をシステム aware に合わせて競合を防ぐ。
+    if sys.platform == "win32":
+        os.environ.setdefault("QT_QPA_PLATFORM", "windows:dpiawareness=1")
+
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec())
+
+
+if __name__ == "__main__":
+    main()
