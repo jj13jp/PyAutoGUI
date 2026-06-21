@@ -159,3 +159,10 @@ class MainWindow(QWidget):
         self._status_label.setText("停止中")
         self._append_log("停止しました")
         self._worker = None
+
+    def closeEvent(self, event) -> None:
+        if self._worker is not None and self._worker.isRunning():
+            self._worker.request_stop()
+            self._worker.wait()
+        event.accept()
+        super().closeEvent(event)
